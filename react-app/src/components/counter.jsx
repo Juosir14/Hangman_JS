@@ -3,7 +3,7 @@ import React, { Component } from "react";
 const initialState = {
   count: 10,
   letters: [],
-  example: "",
+  example: "a",
   letterError: "",
   //image: "https://picsum.photos/200",
   //address:{
@@ -54,9 +54,10 @@ class Counter extends Component {
 
   validate = () => {
     let letterError = "";
+
     if (
       !this.state.example.match(/[a-z]/i) ||
-      this.state.example.match(/[A-Z]/i)
+      !this.state.example.match(/[A-Z]/i)
     ) {
       letterError = "it is not a letter!";
     }
@@ -122,6 +123,7 @@ class Counter extends Component {
         >
           {this.formatButton()}
         </button>
+
         <hr></hr>
         {this.renderLetters()}
       </React.Fragment>

@@ -6,11 +6,13 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 
 import Counter from "./components/counter";
+import HangMan from "./components/hangMan";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Counter />
+    <HangMan />
   </React.StrictMode>,
+
   document.getElementById("root")
 );
 
