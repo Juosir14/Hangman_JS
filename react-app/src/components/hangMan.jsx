@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import Modal from "react-modal";
 
 class HangMan extends Component {
   //state = initialState;
@@ -8,10 +9,12 @@ class HangMan extends Component {
     super();
 
     this.state = {
-      people: [],
+      letters: [],
       errorMsg: "",
       count: 10,
       randomWord: "",
+      currentWord: "",
+      won: false,
       words: [
         "gregarious",
         "initiative",
@@ -74,14 +77,14 @@ class HangMan extends Component {
     let letterError = this.validate();
     if (!letterError) {
       this.count();
-      if (this.state.people.length < 10) {
+      if (this.state.letters.length < 10) {
         this.setState({
-          people: this.state.people.concat(this.letterTextinput.value),
+          letters: this.state.letters.concat(this.letterTextinput.value),
           errorMsg: null,
         });
       }
     } else {
-      if (this.state.people.length > 9) {
+      if (this.state.letters.length > 9) {
         this.count();
         this.setState({
           errorMsg: null,
@@ -109,19 +112,21 @@ class HangMan extends Component {
       letterError = "It is not a letter!";
     } else if (this.checkLetter()) {
       letterError = "This letter already guessed.";
+    } else if (localStorage.getItem("WON") === true) {
+      letterError = "You WON!";
     } else {
-      //siuncia, kad good
+      //send null (correct)
       return letterError;
     }
 
-    //siuncia errora
+    //sends error message
     return letterError;
   }
 
   checkLetter() {
-    for (var i = 0; i < this.state.people.length; i++) {
-      //console.log(this.state.people[i]);
-      if (this.state.people[i] === this.letterTextinput.value) {
+    for (var i = 0; i < this.state.letters.length; i++) {
+      //console.log(this.state.letters[i]);
+      if (this.state.letters[i] === this.letterTextinput.value) {
         return true;
       }
     }
@@ -131,7 +136,7 @@ class HangMan extends Component {
   count() {
     console.log("Guess added. Left: ", this.state.count);
     this.setState({ count: this.state.count - 1 });
-    if (this.state.count < 1) {
+    if (this.state.count < 1 || localStorage.getItem("WON") === true) {
       window.location.reload(false);
     }
   }
@@ -146,12 +151,14 @@ class HangMan extends Component {
   }
 
   render() {
-    let letters = this.state.people.map((letter) => {
+    let letters = this.state.letters.map((letter) => {
       return <li key={letter}>{letter}</li>;
     });
     return (
       <div>
-        <p>{this.showRandomWord()}</p>
+        <h1>HangMan</h1>
+        <hr></hr>
+        <h3>{this.showRandomWord()}</h3>
         <div className="row">
           <div className="col-md-4 col-md-offset-2">
             <br />
@@ -187,7 +194,8 @@ class HangMan extends Component {
           </div>
         </div>
         <br />
-        <ListCountInfo count={this.state.people.length} />
+        {/*<ListCountInfo count={this.state.letters.length} />*/}
+        {/*{this.checkIfWon(this.showRandomWord())}*/}
       </div>
     );
   }
@@ -195,7 +203,7 @@ class HangMan extends Component {
   formatButton() {
     //const { count } = this.state;
     let btn;
-    if (this.state.count === 0) {
+    if (this.state.count === 0 || localStorage.getItem("WON") === true) {
       btn = "Restart";
     } else btn = "Guess";
     return btn;
@@ -221,17 +229,70 @@ class HangMan extends Component {
     let rnd = null;
     if (this.state.count === 10 && this.state.randomWord === "") {
       rnd = Math.floor(Math.random() * this.state.words.length);
-      this.setState({ randomWord: "aaa" });
-      //console.log("random:", this.state.words[rnd]);
       localStorage.setItem("randomWord", this.state.words[rnd]);
       console.log("random:", localStorage.getItem("randomWord"));
     }
   }
 
   showRandomWord() {
-    return localStorage.getItem("randomWord");
+    let realWord = localStorage.getItem("randomWord");
+    let showingWord = "";
+    showingWord = realWord.split("");
+    for (var i = 0; i < realWord.length; i++) {
+      showingWord[i] = "_";
+      for (var j = 0; j < this.state.letters.length; j++) {
+        if (this.state.letters[j] === realWord[i]) {
+          showingWord[i] = this.state.letters[j];
+        }
+        if (this.state.count < 1) {
+          showingWord[i] = realWord[i];
+        }
+      }
+    }
+
+    return this.checkIfWon(showingWord);
   }
 
+  checkIfWon(text) {
+    let isWord = text;
+    let count = 0;
+    if (this.state.count > 0) {
+      for (var i = 0; i < isWord.length; i++) {
+        if (isWord[i] == "_") {
+          count++;
+        }
+      }
+      console.log("Counter: ", count);
+    }
+    if (count == 0 && this.state.letters.length > 0) {
+      localStorage.setItem("WON", true);
+      console.log("Won:", localStorage.getItem("WON"));
+      //this.setState({ openModal: true });
+      //this.setModal();
+      return "WON";
+    }
+
+    console.log("If matched", isWord);
+    return isWord;
+  }
+
+  setModal() {
+    if (this.state.openModal === false) {
+      return (
+        <Modal isOpen={true} ariaHideApp={false}>
+          <form>
+            <h2>You WON!</h2>
+            <button type="subtim">Restart</button>
+          </form>
+        </Modal>
+      );
+    }
+    return null;
+  }
+
+  refreshPage() {
+    window.location.reload(false);
+  }
   //
 }
 
