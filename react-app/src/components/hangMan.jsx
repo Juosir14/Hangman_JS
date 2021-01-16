@@ -11,9 +11,63 @@ class HangMan extends Component {
       people: [],
       errorMsg: "",
       count: 10,
+      randomWord: "",
+      words: [
+        "gregarious",
+        "initiative",
+        "absorption",
+        "opposition",
+        "atmosphere",
+        "registration",
+        "pedestrian",
+        "concentrate",
+        "entitlement",
+        "background",
+        "publication",
+        "hospitality",
+        "assessment",
+        "vegetation",
+        "incongruous",
+        "partnership",
+        "leadership",
+        "conference",
+        "exaggerate",
+        "celebration",
+        "constitutional",
+        "experiment",
+        "identification",
+        "motivation",
+        "simplicity",
+        "intervention",
+        "jurisdiction",
+        "plagiarize",
+        "contribution",
+        "accessible",
+        "instruction",
+        "federation",
+        "negotiation",
+        "photograph",
+        "constituency",
+        "distribute",
+        "excitement",
+        "possession",
+        "psychology",
+        "basketball",
+        "artificial",
+        "revolutionary",
+        "conservation",
+        "mechanical",
+        "domination",
+        "transparent",
+        "acquaintance",
+        "experience",
+        "application",
+        "conglomerate",
+      ],
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.setRandomWord();
   }
 
   handleClick() {
@@ -97,6 +151,7 @@ class HangMan extends Component {
     });
     return (
       <div>
+        <p>{this.showRandomWord()}</p>
         <div className="row">
           <div className="col-md-4 col-md-offset-2">
             <br />
@@ -148,19 +203,33 @@ class HangMan extends Component {
 
   formatCount() {
     const { count } = this.state;
-    //const zer = <h1>Zero</h1>;
-    let zer = "Moves left: ";
-    zer += this.state.count;
+    let msg = "Moves left: ";
+    msg += this.state.count;
     if (this.state.count < 1) {
       return "Lost";
     }
-    return zer;
+    return msg;
   }
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
     classes += this.state.count < 4 ? "warning" : "primary";
     return classes;
+  }
+
+  setRandomWord() {
+    let rnd = null;
+    if (this.state.count === 10 && this.state.randomWord === "") {
+      rnd = Math.floor(Math.random() * this.state.words.length);
+      this.setState({ randomWord: "aaa" });
+      //console.log("random:", this.state.words[rnd]);
+      localStorage.setItem("randomWord", this.state.words[rnd]);
+      console.log("random:", localStorage.getItem("randomWord"));
+    }
+  }
+
+  showRandomWord() {
+    return localStorage.getItem("randomWord");
   }
 
   //
