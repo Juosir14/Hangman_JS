@@ -1,6 +1,7 @@
 import React from "react";
 
 class HandleLetter extends React.Component {
+  //sending data which are required for class's function/components/methods
   constructor(count, letters, letterTextinput) {
     super();
     this.count = count;
@@ -8,15 +9,9 @@ class HandleLetter extends React.Component {
     this.letterTextinput = letterTextinput;
   }
 
+  //assing all possible warning for incorrect inputs
+  //return null if everything goes fine
   validate() {
-    //console.log("this.props.letters", this.letters);
-    //console.log("this.letterTextinput.value", this.letterTextinput.value);
-    //console.log("this.count", this.count);
-    //console.log("this.letterTextinput ====", this.letterTextinput);
-    //
-    //this.letterTextinput = "hello";
-
-    //console.log("this.letterTextinput ====", this.letterTextinput);
     let letterError = "";
     if (this.letterTextinput.length === 0) {
       letterError = "It can not be empty!";
@@ -33,11 +28,13 @@ class HandleLetter extends React.Component {
     if (localStorage.getItem("WON") === "WON") {
       letterError = "You WON!";
     }
-    console.log("lettereeror", letterError);
+    //console.log("lettereeror", letterError);
+
     //sends error message or null
     return letterError;
   }
 
+  //check if client's written character is a letter
   checkLetter() {
     for (var i = 0; i < this.letters.length; i++) {
       //console.log(this.letters[i]);

@@ -1,6 +1,7 @@
 import React from "react";
 
 class FormatButton extends React.Component {
+  //formatting button name for meaningful purpose
   render() {
     let btn;
     if (

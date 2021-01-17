@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import HandleLetter from "./HandleLetter";
 
+//main class, where are all counting processes
 class MainCounting extends React.Component {
   constructor(props) {
     super();
@@ -68,19 +69,14 @@ class MainCounting extends React.Component {
         "conglomerate",
       ],
     };
-    //console.log("inputa:", inputa);
-    //this.letterTextinput = inputa;
-    //console.log("letterTextinput:", this.letterTextinput);
   }
 
   validate(letter) {
-    console.log("letter----", letter);
     const handlerLettter = new HandleLetter(
       this.state.count,
       this.state.letters,
       letter
     );
-    console.log("count mainCOUNTINGE:", this.state.count);
     var letterError = handlerLettter.validate();
     if (!letterError) {
       //this.counts();
@@ -88,14 +84,11 @@ class MainCounting extends React.Component {
         this.state.letters = this.state.letters.concat(letter.toLowerCase());
         this.state.errorMsg = null;
       }
-      console.log("Im in !letter -", this.state.letters);
     } else {
       if (
         this.state.letters.length > 9 ||
         localStorage.getItem("WON") === "WON"
       ) {
-        console.log("Im in elseeeeeee");
-        //this.counts();
         this.state.errorMsg = null;
       } else {
         this.state.errorMsg = letterError;
@@ -112,18 +105,10 @@ class MainCounting extends React.Component {
     ReactDOM.findDOMNode(this.letterTextinput).focus();
   }
 
-  cheackIfLost() {
-    if (this.state.count === 0 && !(localStorage.getItem("WON") === "WON")) {
-      localStorage.setItem("LOST", "LOST");
-      return true;
-    } else return false;
-  }
-
+  //counts going to subract after correct input is given
   counts() {
-    console.log("Guess added. Left: ", this.state.count);
-    //this.setState({ count: this.state.count - 1 });
+    //this.setState({ count: this.state.count - 1 }); //-----------somehow setState does not work there, so decided to do manually
     this.state.count = this.state.count - 1;
-    console.log("Guess after substraction: ", this.state.count);
     if (this.state.count < 0 || localStorage.getItem("WON") === "WON") {
       window.location.reload(false);
     }
@@ -133,11 +118,13 @@ class MainCounting extends React.Component {
     return this.validate();
   }
 
+  //at the start, set random word for guessing
   setRandomWord() {
     let rnd = null;
     if (this.state.count === 10 && this.state.randomWord === "") {
       rnd = Math.floor(Math.random() * this.state.words.length);
       localStorage.setItem("randomWord", this.state.words[rnd]);
+      //for testing purposes - F12 -> Console - to get the random word. (also going to this leave in final version)
       console.log("random:", localStorage.getItem("randomWord"));
     }
   }

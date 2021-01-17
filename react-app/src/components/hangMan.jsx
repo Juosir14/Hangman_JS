@@ -4,8 +4,6 @@ import FormatButton from "./FormatButton";
 import FormatCount from "./FormatCount";
 import ListCountInfo from "./ListCountInfo";
 import ShowRandomWord from "./ShowRandomWord";
-//import HandleLetter from "./HandleLetter";
-//import GetBadgeClasses from "./GetBadgeClasses";
 import MainCounting from "./MainCounting";
 
 class HangMan extends Component {
@@ -21,15 +19,17 @@ class HangMan extends Component {
     this.handleClick = this.handleClick.bind(this);
 
     localStorage.setItem("WON", "No");
+    //add Main counting class for processing here
     this.mainCounting = new MainCounting();
+    //after page is loading, 1st thing to do is to generate random word
     this.mainCounting.setRandomWord();
   }
 
   handleClick() {
+    //setting error message if input was incorrect
     var letterError = this.mainCounting.validate(this.letterTextinput.value);
 
-    console.log("aaaaa--", this.mainCounting.state.count);
-
+    //if input correct (letterError = null) subtract count and add letter to letters list
     if (!letterError) {
       this.mainCounting.counts();
       if (this.mainCounting.state.letters.length < 11) {
@@ -38,6 +38,7 @@ class HangMan extends Component {
         });
       }
     } else {
+      //if incorrect, check if it is lost or won (for restart page)
       if (
         this.mainCounting.state.letters.length > 9 ||
         localStorage.getItem("WON") === "WON"
@@ -52,8 +53,6 @@ class HangMan extends Component {
         });
       }
     }
-
-    //console.log(this.state);
   }
 
   componentDidMount() {
@@ -121,6 +120,7 @@ class HangMan extends Component {
     );
   }
 
+  //decorates Moves left:
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
     classes +=

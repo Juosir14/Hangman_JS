@@ -1,5 +1,6 @@
 import React from "react";
 class ShowRandomWord extends React.Component {
+  //assign correct guesed letters for true value, otherwise - '_'
   showRandomWord() {
     let realWord = localStorage.getItem("randomWord");
     let showingWord = "";
@@ -14,9 +15,7 @@ class ShowRandomWord extends React.Component {
     }
     var normalWord = showingWord.join("");
     localStorage.setItem("Word", normalWord);
-    //console.log("showing word", normalWord);
     if (this.checkIfWon(normalWord) === "WON") {
-      //console.log("showing wordaaa", normalWord);
       return "WON";
     }
     if (this.props.count < 1) {
@@ -25,9 +24,9 @@ class ShowRandomWord extends React.Component {
     return this.checkIfWon(normalWord);
   }
 
+  //check if client won. Going throw all showing Word letters. If there are not any _ - client won
   checkIfWon(text) {
     let isWord = text;
-    //console.log("Take a look into text:", isWord);
     var county = 0;
     if (this.props.count >= 0) {
       for (var i = 0; i < isWord.length; i++) {
@@ -35,19 +34,15 @@ class ShowRandomWord extends React.Component {
           county++;
         }
       }
-      //console.log("iword: ", isWord);
-      //console.log("localStorage.getItem(): ", localStorage.getItem("Word"));
       if (county === 0 && isWord === localStorage.getItem("Word")) {
-        console.log("Counter after if xdd: ", county);
         if (this.props.letters.length > 0) {
           localStorage.setItem("WON", "WON");
-          //console.log("Won:", localStorage.getItem("WON"));
+          //instead of all word return Won message
           return "WON";
         }
       }
     }
-
-    //console.log("If matched", isWord);
+    //return showing word with '_'
     return isWord;
   }
   render() {

@@ -1,5 +1,6 @@
 import React from "react";
 class ListCountInfo extends React.Component {
+  //formatting count of all letters in list
   render() {
     if (this.props.count === 0) {
       return (
