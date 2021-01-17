@@ -112,7 +112,7 @@ class MainCounting extends React.Component {
     ReactDOM.findDOMNode(this.letterTextinput).focus();
   }
 
-  ifLost() {
+  cheackIfLost() {
     if (this.state.count === 0 && !(localStorage.getItem("WON") === "WON")) {
       localStorage.setItem("LOST", "LOST");
       return true;

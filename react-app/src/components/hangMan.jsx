@@ -15,64 +15,7 @@ class HangMan extends Component {
     super();
 
     this.state = {
-      letters: [],
       errorMsg: "",
-      count: 10,
-      randomWord: "",
-      currentWord: "",
-      won: false,
-      words: [
-        "gregarious",
-        "initiative",
-        "absorption",
-        "opposition",
-        "atmosphere",
-        "registration",
-        "pedestrian",
-        "concentrate",
-        "entitlement",
-        "background",
-        "publication",
-        "hospitality",
-        "assessment",
-        "vegetation",
-        "incongruous",
-        "partnership",
-        "leadership",
-        "conference",
-        "exaggerate",
-        "celebration",
-        "constitutional",
-        "experiment",
-        "identification",
-        "motivation",
-        "simplicity",
-        "intervention",
-        "jurisdiction",
-        "plagiarize",
-        "contribution",
-        "accessible",
-        "instruction",
-        "federation",
-        "negotiation",
-        "photograph",
-        "constituency",
-        "distribute",
-        "excitement",
-        "possession",
-        "psychology",
-        "basketball",
-        "artificial",
-        "revolutionary",
-        "conservation",
-        "mechanical",
-        "domination",
-        "transparent",
-        "acquaintance",
-        "experience",
-        "application",
-        "conglomerate",
-      ],
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -89,7 +32,7 @@ class HangMan extends Component {
 
     if (!letterError) {
       this.mainCounting.counts();
-      if (this.mainCounting.state.letters.length < 10) {
+      if (this.mainCounting.state.letters.length < 11) {
         this.setState({
           errorMsg: null,
         });
@@ -100,9 +43,9 @@ class HangMan extends Component {
         localStorage.getItem("WON") === "WON"
       ) {
         this.mainCounting.counts();
-        // this.setState({
-        //   errorMsg: null,
-        // });
+        this.setState({
+          errorMsg: null,
+        });
       } else {
         this.setState({
           errorMsg: letterError,
