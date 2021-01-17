@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import BackEnd from "./backEnd";
-
-class HangMan extends Component {
-  //state = initialState;
-
+class BackEnd extends Component {
   constructor(props) {
     super();
 
@@ -73,7 +69,6 @@ class HangMan extends Component {
     this.setRandomWord();
     localStorage.setItem("WON", "No");
   }
-
   handleClick() {
     let letterError = this.validate();
     if (!letterError) {
@@ -185,7 +180,7 @@ class HangMan extends Component {
               {this.formatButton()}
             </button>
             <span style={{ fontSize: 20 }} className={this.getBadgeClasses()}>
-              {<FormatCount count={this.state.count} />}
+              {this.formatCount()}
             </span>
           </div>
           <br />
@@ -211,6 +206,20 @@ class HangMan extends Component {
     return btn;
   }
 
+  formatCount() {
+    const { count } = this.state;
+    let msg = "Moves left: ";
+    msg += this.state.count;
+    if (this.state.count < 1) {
+      msg = "Lost";
+    }
+    if (localStorage.getItem("WON") === "WON") {
+      console.log("aaaaaaaaaa");
+      msg = "You WON!";
+    }
+    return msg;
+  }
+
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
     classes += this.state.count < 4 ? "warning" : "primary";
@@ -226,7 +235,7 @@ class HangMan extends Component {
     }
   }
 
-  showRandomWord() {
+  showRandomWord = () => {
     let realWord = localStorage.getItem("randomWord");
     let showingWord = "";
     showingWord = realWord.split("");
@@ -236,41 +245,30 @@ class HangMan extends Component {
         if (this.state.letters[j] === realWord[i]) {
           showingWord[i] = this.state.letters[j];
         }
+        if (this.state.count < 1) {
+          showingWord[i] = realWord[i];
+        }
       }
     }
-    var normalWord = showingWord.join("");
-    localStorage.setItem("Word", normalWord);
-    console.log("showing word", normalWord);
-    if (this.checkIfWon(normalWord) === "WON") {
-      console.log("showing wordaaa", normalWord);
-      return "WON";
-    }
-    if (this.state.count < 1) {
-      normalWord = realWord;
-    }
-    return this.checkIfWon(normalWord);
-  }
+
+    return this.checkIfWon(showingWord);
+  };
 
   checkIfWon(text) {
     let isWord = text;
-    console.log("Take a look into text:", isWord);
-    var county = 0;
-    if (this.state.count >= 0) {
+    let count = 0;
+    if (this.state.count > 0) {
       for (var i = 0; i < isWord.length; i++) {
         if (isWord[i] == "_") {
-          county++;
+          count++;
         }
       }
-      console.log("iword: ", isWord);
-      console.log("localStorage.getItem(): ", localStorage.getItem("Word"));
-      if (county === 0 && isWord === localStorage.getItem("Word")) {
-        console.log("Counter after if xdd: ", county);
-        if (this.state.letters.length > 0) {
-          localStorage.setItem("WON", "WON");
-          console.log("Won:", localStorage.getItem("WON"));
-          return "WON";
-        }
-      }
+      console.log("Counter: ", count);
+    }
+    if (count == 0 && this.state.letters.length > 0) {
+      localStorage.setItem("WON", "WON");
+      console.log("Won:", localStorage.getItem("WON"));
+      return "WON";
     }
 
     console.log("If matched", isWord);
@@ -308,19 +306,4 @@ class ListCountInfo extends React.Component {
   }
 }
 
-class FormatCount extends React.Component {
-  render() {
-    const { count } = this.props;
-    let msg = "Moves left: ";
-    msg += this.props.count;
-    if (this.props.count < 1) {
-      msg = "Lost";
-    }
-    if (localStorage.getItem("WON") === "WON") {
-      msg = "You WON!";
-    }
-    return msg;
-  }
-}
-
-export default HangMan;
+export default BackEnd;
