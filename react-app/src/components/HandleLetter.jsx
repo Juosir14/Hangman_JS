@@ -2,9 +2,8 @@ import React from "react";
 
 class HandleLetter extends React.Component {
   //sending data which are required for class's function/components/methods
-  constructor(count, letters, letterTextinput) {
+  constructor(letters, letterTextinput) {
     super();
-    this.count = count;
     this.letters = letters;
     this.letterTextinput = letterTextinput;
   }
@@ -38,7 +37,7 @@ class HandleLetter extends React.Component {
   checkLetter() {
     for (var i = 0; i < this.letters.length; i++) {
       //console.log(this.letters[i]);
-      if (this.letters[i] === this.letterTextinput) {
+      if (this.letters[i] === this.letterTextinput.toLowerCase()) {
         return true;
       }
     }

@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 
 //import Counter from "./components/counter";
-import HangMan from "./components/hangMan";
+import HangMan from "./components/HangMan";
 
 ReactDOM.render(
   <React.StrictMode>

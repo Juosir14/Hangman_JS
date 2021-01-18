@@ -19,8 +19,10 @@ class HangMan extends Component {
     this.handleClick = this.handleClick.bind(this);
 
     localStorage.setItem("WON", "No");
+
     //add Main counting class for processing here
     this.mainCounting = new MainCounting();
+
     //after page is loading, 1st thing to do is to generate random word
     this.mainCounting.setRandomWord();
   }
@@ -72,7 +74,7 @@ class HangMan extends Component {
       <div>
         <h1>HangMan</h1>
         <hr></hr>
-        <h3>
+        <h3 data-testid="RandomWord">
           {
             <ShowRandomWord
               count={this.mainCounting.state.count}
@@ -90,32 +92,39 @@ class HangMan extends Component {
               ref={(ref) => (this.letterTextinput = ref)}
               className="form-control"
             />
-            <div style={{ fontSize: 12, color: "red" }}>
+            <div data-testid="error" style={{ fontSize: 12, color: "red" }}>
               {this.state.errorMsg}
             </div>
           </div>
           <div className="col-md-4">
             <br />
             <button
+              data-testid="button"
               type="button"
               className="btn btn-success"
               onClick={this.handleClick}
             >
               {<FormatButton count={this.mainCounting.state.count} />}
             </button>
-            <span style={{ fontSize: 20 }} className={this.getBadgeClasses()}>
+            <span
+              data-testid="badges"
+              style={{ fontSize: 20 }}
+              className={this.getBadgeClasses()}
+            >
               {<FormatCount count={this.mainCounting.state.count} />}
             </span>
           </div>
           <br />
         </div>
         <div>
-          <div className="col-md-4 col-md-offset-2">
+          <div data-testid="letters" className="col-md-4 col-md-offset-2">
             <ol>{letters}</ol>
           </div>
         </div>
         <br />
-        {<ListCountInfo count={this.mainCounting.state.letters.length} />}
+        <div data-testid="list">
+          {<ListCountInfo count={this.mainCounting.state.letters.length} />}
+        </div>
       </div>
     );
   }

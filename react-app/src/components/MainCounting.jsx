@@ -72,11 +72,7 @@ class MainCounting extends React.Component {
   }
 
   validate(letter) {
-    const handlerLettter = new HandleLetter(
-      this.state.count,
-      this.state.letters,
-      letter
-    );
+    const handlerLettter = new HandleLetter(this.state.letters, letter);
     var letterError = handlerLettter.validate();
     if (!letterError) {
       //this.counts();
