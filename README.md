@@ -1,5 +1,5 @@
 # Hangman_JS
-Simple Hangman game without drawing.
+Simple Hangman game without drawing a gibbet.
 
 * Program generates random word. 
 * Client guessing letter by letter. 
@@ -16,5 +16,16 @@ Simple Hangman game without drawing.
 * Program will automatically open the browser in *localhost:3000*
 * If everything goes well You should see this window.
 
+![home](https://github.com/Juosir14/Hangman_JS/blob/main/images/home.png)
 
+* You can start playing by writting letters in input box.
 
+![middle](https://github.com/Juosir14/Hangman_JS/blob/main/images/middle.png)
+
+* If You guess all letters correctly - you win.
+
+![won](https://github.com/Juosir14/Hangman_JS/blob/main/images/won.png)
+
+* Unfortunately, sometimes we have to get down for a chance to get up and become stronger.
+
+![lost](https://github.com/Juosir14/Hangman_JS/blob/main/images/lost.png)
