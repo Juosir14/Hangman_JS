@@ -9,8 +9,8 @@ Simple Hangman game without drawing a gibbet.
 
 # How to start a program
 
-* Download interface which supports JavaScript. I used Visual Studio Code.
-* Follow [this guide](https://youtu.be/Ke90Tje7VS0?t=432) and install required packages. Also You can practise programming by watching this video:
+* Download interface which supports *JavaScript*. I used *Visual Studio Code*.
+* Follow *[this guide](https://youtu.be/Ke90Tje7VS0?t=432)* and install required packages. Also You can practise programming by watching this video:
 * Whenever You will done all installs - open the terminal and run this command: `~$ npm start`
 **Warning: You have to be in react-app repository to run the program.**
 * Program will automatically open the browser in *localhost:3000*
@@ -29,3 +29,6 @@ Simple Hangman game without drawing a gibbet.
 * Unfortunately, sometimes we have to get down for a chance to get up and become stronger.
 
 ![lost](https://github.com/Juosir14/Hangman_JS/blob/main/images/lost.png)
+
+## P.S.
+To run Unit tests You have to write command `~$ npm test` instead of `~$ npm start`
